@@ -1,0 +1,27 @@
+{
+  "name": "gunandrun",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Pelmen2la <pelmengi12>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Pelmen2la/GunAndRun",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "angular": "^1.5.7",
+    "ol3": "ol3-bower#^3.16.0",
+    "angular-ui-select": "^0.18.0"
+  }
+}
