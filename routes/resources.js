@@ -1,22 +1,14 @@
 'use strict';
 
-var jsonfile = require('jsonfile'),
-    countryListDataPath = appRoot + '\\node_modules\\world-countries\\dist\\countries.json';
+var utils = require('app/utils');
 
 module.exports = function(app) {
     app.get('/country_list/', function(req, res, next) {
-        jsonfile.readFile(countryListDataPath, function(err, obj) {
-            if(!err) {
-                res.json({
+        utils.getCountryList(function(countryList) {
+            res.json({
                     success: true,
-                    countryList: obj
-                })
-            } else {
-                res.json({
-                    success: false
-                });
-            }
-        })
-
+                    countryList: countryList
+            });
+        });
     });
 };

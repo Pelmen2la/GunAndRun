@@ -10,6 +10,18 @@ angular.module('gunAndRunApp.controllers')
 
             loadCountryList();
 
+            window.setInterval(function() {
+                $http({
+                    method: 'GET',
+                    url: '/game/info/',
+                    params: {
+                        playerName: $scope.playerData.name,
+                        key: $scope.playerData.key
+                    }
+                }).then(function(response) {
+                });
+            }, 1000);
+
             $scope.changeLanguage = function(language) {
                 $scope.appLanguage = language;
             };
