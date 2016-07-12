@@ -14,11 +14,26 @@
 <div ng-controller="MainController" class="main-div">
     <div ng-show="playerData.key" class="game-interface-wrapper" ng-controller="GameInterfaceController">
         <div class="weapon-bar">
-            <span class="weapon-item" ng-repeat="weapon in playerData.weapons">
-                <span class="weapon-icon" ng-class="weapon.name"></span>
-                {{weapon.name}}
+            <span class="weapon-item" ng-repeat="weapon in playerData.weaponList" ng-click="onWeaponItemClick(weapon)">
+                <div class="weapon-ammo">{{weapon.ammo}}</div>
+                <div class="weapon-icon" ng-class="weapon.name"></div>
+                <div class="selected-mask" ng-show="weapon == playerData.selectedWeapon"></div>
             </span>
         </div>
+        <div class="selected-weapon-info">
+            <div class="damage">{{playerData.selectedWeapon.minDamage + '-' + playerData.selectedWeapon.maxDamage}}
+            </div>
+            <div class="accuracy">{{playerData.selectedWeapon.accuracy * 100 + '%'}}</div>
+            <div class="ammo">{{playerData.selectedWeapon.ammo}}</div>
+            <div class="reloading">{{playerData.selectedWeapon.reloading}}</div>
+        </div>
+        <div class="hp-info">
+            <div class="armor-icon">
+                <img class="flag" ng-src="../resources/icons/flags/small/{{playerData.country.demonym}}.png">
+            </div>
+            <span class="hp"">{{playerData.hp}}</span>
+        </div>
+        <div class="stat-info">{{playerData.hp}}</div>
     </div>
 
     <div id="MainMap" class="main-map" ng-controller="MapController"></div>
@@ -32,11 +47,13 @@
                         <div class="modal-body">
                             {{getText('nameInputLabel')}}<input type="text" class="form-control"
                                                                 ng-model="playerData.name">
-                            {{getText('countryInputLabel')}}<ui-select ng-model="playerData.country">
+                            {{getText('countryInputLabel')}}
+                            <ui-select ng-model="playerData.country">
                                 <ui-select-match>
                                     {{getCountryName($select.selected)}}
                                 </ui-select-match>
-                                <ui-select-choices repeat="item in countryList | filter:filterCountryList($select.search)">
+                                <ui-select-choices
+                                        repeat="item in countryList | filter:filterCountryList($select.search)">
                                     {{getCountryName(item)}}
                                 </ui-select-choices>
                             </ui-select>

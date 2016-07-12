@@ -74,22 +74,41 @@ body {
     width: 100%;
     height: 100%;
     position: absolute;
+}
+
+.game-interface-wrapper > div {
+    position: absolute;
     z-index: 1;
 }
 
-.game-interface-wrapper div {
-    position: absolute;
+/* Weapon Bar */
+.game-interface-wrapper .weapon-bar {
+    width: 100%;
+    bottom: 25%;
+    overflow: auto;
+    text-align: center;
 }
 
-/* Weapon Bar */
-.weapon-bar {
-    height: 30px;
-    width: 100%;
-    bottom: 15%;
-    text-align: center;
-    font-size: 40px;
-    line-height: 64px;
+.game-interface-wrapper .weapon-bar .weapon-item {
+    display: inline-block;
+    position: relative;
+    margin: 0 5px;
+    cursor: pointer;
     font-weight: bold;
+    font-size: 15px;
+    color: black;
+    z-index: 2;
+}
+
+.game-interface-wrapper .weapon-bar .weapon-item .selected-mask {
+    position: absolute;
+    z-index: 1;
+    background: white;
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .weapon-icon {
@@ -110,6 +129,72 @@ body {
     background-image: url(../resources/icons/weapons/rifle.png);
 }
 /* /Weapon Bar */
+
+/* Bottom Info Items */
+.game-interface-wrapper {
+    width: 100%;
+    overflow: auto;
+}
+
+.game-interface-wrapper .selected-weapon-info,
+.game-interface-wrapper .hp-info {
+    bottom: 5%;
+}
+
+.game-interface-wrapper .selected-weapon-info {
+    left: 2%;
+}
+
+.game-interface-wrapper .selected-weapon-info div {
+    padding-left: 36px;
+    background-repeat: no-repeat;
+    height: 32px;
+    line-height: 32px;
+    font-size: 20px;
+}
+
+.game-interface-wrapper .selected-weapon-info .damage {
+    background-image: url(../resources/icons/interface/damage.png);
+}
+
+.game-interface-wrapper .selected-weapon-info .accuracy {
+    background-image: url(../resources/icons/interface/accuracy.png);
+}
+
+.game-interface-wrapper .selected-weapon-info .reloading {
+    background-image: url(../resources/icons/interface/reloading.png);
+}
+
+.game-interface-wrapper .selected-weapon-info .ammo {
+    background-image: url(../resources/icons/interface/ammo.png);
+}
+
+.game-interface-wrapper .hp-info {
+    width: 64px;
+    margin-left: -25px;
+    left: 50%;
+    text-align: center;
+}
+
+.game-interface-wrapper .hp-info .armor-icon {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    background-image: url(../resources/icons/interface/armor.png);
+}
+
+.game-interface-wrapper .hp-info .armor-icon .flag {
+    top: 34px;
+    left: 16px;
+    position: absolute;
+}
+
+.game-interface-wrapper .hp-info .hp {
+    background: url(../resources/icons/interface/health.png) no-repeat;
+    display: inline-block;
+    padding-left: 18px;
+}
+/* /Bottom Info Panel */
 /* /Game Interface Wrapper */
 
 

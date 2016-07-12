@@ -13,6 +13,8 @@ angular.module('gunAndRunApp.controllers')
                 if(response.data.success) {
                     $scope.error = null;
                     $scope.$parent.playerData = response.data.playerData;
+                    $scope.$parent.playerData.selectedWeapon = $scope.$parent.playerData.weaponList[0];
+                    window.playerData = $scope.playerData;
                 } else {
                     $scope.activeError = $scope.loginErrors.loginExists;
                 }
