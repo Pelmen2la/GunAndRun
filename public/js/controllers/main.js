@@ -6,7 +6,8 @@ angular.module('gunAndRunApp.controllers')
             $scope.stringResources = StringResources;
             $scope.allowedLanguages = ['eng', 'rus'];
             $scope.appLanguage = 'eng';
-            $scope.playerData = {};
+            $scope.playerData = {}
+            $scope.playersHash = [];
 
             loadCountryList();
 
@@ -19,6 +20,13 @@ angular.module('gunAndRunApp.controllers')
                         key: $scope.playerData.key
                     }
                 }).then(function(response) {
+                    var playerData = response.data.playerData;
+                    if(playerData && playerData.key) {
+                        var selectedWeapon = $scope.playerData.selectedWeapon || playerData.weaponList[0];
+                        $scope.playerData = response.data.playerData;
+                        $scope.playerData.selectedWeapon = selectedWeapon;
+                    }
+                    $scope.playersHash = response.data.playersHash || {};
                 });
             }, 1000);
 

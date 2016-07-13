@@ -4,9 +4,10 @@ var playersModule = require('app/players');
 
 module.exports = function(app) {
     app.post('/login/', function(req, res, next) {
-        var name = req.body.name,
-            country = req.body.country;
-        res.json(playersModule.tryAddPlayer(name, country));
+        res.json(playersModule.tryAddPlayer({
+            name: req.body.name,
+            country: req.body.country
+        }));
     });
 
     app.get('/game/info', function(req, res, next) {
