@@ -13,19 +13,29 @@
 
 <div ng-controller="MainController" class="main-div">
     <div ng-show="playerData.key" class="game-interface-wrapper" ng-controller="GameInterfaceController">
-        <div class="weapon-bar">
-            <span class="weapon-item" ng-repeat="weapon in playerData.weaponList" ng-click="onWeaponItemClick(weapon)">
-                <div class="weapon-ammo">{{weapon.ammo}}</div>
-                <div class="weapon-icon" ng-class="weapon.name"></div>
-                <div class="selected-mask" ng-show="weapon.name == playerData.selectedWeapon.name"></div>
-            </span>
+        <div class="action-list">
+            <div class="action-info" ng-repeat="action in playerData.actionList | filter:isActionVisible">
+                <div class="shot-info" ng-show="action.type === 'shot'">
+                    {{action.params.weaponName}}
+                    {{action.params.damage}}
+                </div>
+
+            </div>
+
         </div>
         <div class="selected-weapon-info">
             <div class="damage">{{playerData.selectedWeapon.minDamage + '-' + playerData.selectedWeapon.maxDamage}}
             </div>
             <div class="accuracy">{{playerData.selectedWeapon.accuracy * 100 + '%'}}</div>
             <div class="ammo">{{playerData.selectedWeapon.ammo}}</div>
-            <div class="reloading">{{playerData.selectedWeapon.reloading}}</div>
+            <div class="reloading">{{playerData.selectedWeapon.reloadingTime}}</div>
+        </div>
+        <div class="weapon-bar">
+            <span class="weapon-item" ng-repeat="weapon in playerData.weaponList" ng-click="onWeaponItemClick(weapon)">
+                <div class="weapon-ammo">{{weapon.ammo}}</div>
+                <div class="weapon-icon" ng-class="weapon.name"></div>
+                <div class="selected-mask" ng-show="weapon.name == playerData.selectedWeapon.name"></div>
+            </span>
         </div>
         <div class="hp-info">
             <div class="armor-icon">
@@ -35,7 +45,25 @@
         </div>
     </div>
 
-    <div id="MainMap" class="main-map" ng-controller="MapController"></div>
+    <div ng-controller="MapController">
+        <div id="MainMap" class="main-map">
+        </div>
+        <div id="TargetPopup" class="modal fade in target-popup" role="dialog" ng-show="targetList.length" ng-click="onTargetPopupClick($event)">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog vertical-align-center">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="target-panel" ng-repeat="target in targetList">
+                                <img class="flag" ng-src="../resources/icons/flags/small/{{playerData.country.demonym}}.png">
+                                <span>{{target.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div ng-show="!playerData.key" ng-controller="LoginController">
         <div class="modal-backdrop fade in"></div>

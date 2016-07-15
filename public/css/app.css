@@ -36,7 +36,7 @@ body {
 /* /Icons */
 
 
-/* Login Window */
+/* Login Popup */
 .login-popup {
     display: block;
 }
@@ -63,11 +63,30 @@ body {
     margin-top: 10px;
     position: relative;
 }
-
 .login-popup .buttons-container .submit-button {
     float: right;
 }
-/* /Login Window */
+/* /Login Popup */
+
+/* Target Popup */
+.target-popup {
+    display: block;
+    mind-width: 100px;
+    overflow: auto;
+}
+.target-popup .modal-content {
+    width: 400px;
+}
+.target-popup .target-panel {
+    height: 21px;
+    line-height: 21px;
+    padding: 3px 0;
+    cursor: pointer;
+}
+.target-popup .target-panel:hover span {
+    color: #CCC;
+}
+/* /Target Popup */
 
 /* Game Interface Wrapper */
 .game-interface-wrapper {
@@ -80,6 +99,15 @@ body {
     position: absolute;
     z-index: 1;
 }
+
+/* Action List */
+.action-list {
+    top: 5px;
+    left: 5px;
+    position: absolute;
+    z-index: 1;
+}
+/* /Action List */
 
 /* Weapon Bar */
 .game-interface-wrapper .weapon-bar {

@@ -1,6 +1,7 @@
 'use strict';
 
-var playersModule = require('app/players');
+var playersModule = require('app/players'),
+    gameModule = require('app/game');
 
 module.exports = function(app) {
     app.post('/login/', function(req, res, next) {
@@ -10,7 +11,12 @@ module.exports = function(app) {
         }));
     });
 
+    app.post('/game/shot', function(req, res, next) {
+        var data = req.body;
+        res.json(gameModule.shot(data.playerName, data.key, data.targetPlayerName, data.selectedWeaponName));
+    });
+
     app.get('/game/info', function(req, res, next) {
-        res.json(playersModule.tryGetGameInfo(req.query.playerName, req.query.key));
+        res.json(gameModule.tryGetGameInfo(req.query.playerName, req.query.key));
     });
 };
