@@ -103,7 +103,7 @@ body {
 /* Action List */
 .action-list {
     top: 5px;
-    left: 5px;
+    right: 5px;
     position: absolute;
     z-index: 1;
 }
