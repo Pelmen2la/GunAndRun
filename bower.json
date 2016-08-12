@@ -22,6 +22,7 @@
     "bootstrap": "^3.3.6",
     "angular": "^1.5.7",
     "ol3": "ol3-bower#^3.16.0",
-    "angular-ui-select": "^0.18.0"
+    "angular-ui-select": "^0.18.0",
+    "angular-cookies": "^1.5.8"
   }
 }

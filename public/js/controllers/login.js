@@ -1,5 +1,5 @@
 angular.module('gunAndRunApp.controllers')
-    .controller('LoginController', ['$scope', '$http', function($scope, $http) {
+    .controller('LoginController', ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
         $scope.loginErrors = {
             loginExists: 'loginExists'
         };
@@ -14,7 +14,7 @@ angular.module('gunAndRunApp.controllers')
                     $scope.error = null;
                     $scope.$parent.playerData = response.data.playerData;
                     $scope.$parent.playerData.selectedWeapon = $scope.$parent.playerData.weaponList[0];
-                    window.playerData = $scope.playerData;
+                    $cookies.putObject('playerData', response.data.playerData);
                 } else {
                     $scope.activeError = $scope.loginErrors.loginExists;
                 }

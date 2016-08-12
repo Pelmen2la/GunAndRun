@@ -1,13 +1,13 @@
 angular.module('gunAndRunApp.controllers', []);
 
 angular.module('gunAndRunApp.controllers')
-    .controller('MainController', ['$scope', '$http', 'StringResources', 'Utils',
-        function($scope, $http, StringResources, Utils) {
+    .controller('MainController', ['$scope', '$http', '$cookies', 'StringResources', 'Utils',
+        function($scope, $http, $cookies, StringResources, Utils) {
             $scope.stringResources = StringResources;
             $scope.utils = Utils;
             $scope.allowedLanguages = ['eng', 'rus'];
             $scope.appLanguage = 'eng';
-            $scope.playerData = {}
+            $scope.playerData = $cookies.getObject('playerData') || {};
             $scope.playersHash = [];
 
             loadCountryList();
@@ -23,9 +23,13 @@ angular.module('gunAndRunApp.controllers')
                 }).then(function(response) {
                     var playerData = response.data.playerData;
                     if(playerData && playerData.key) {
+                        $cookies.putObject('playerData', response.data.playerData);
                         var selectedWeapon = $scope.playerData.selectedWeapon || playerData.weaponList[0];
                         $scope.playerData = response.data.playerData;
                         $scope.playerData.selectedWeapon = selectedWeapon;
+                    } else if($scope.playerData && $scope.playerData.key) {
+                        $scope.playerData = {};
+                        $cookies.putObject('playerData', {});
                     }
                     $scope.playersHash = response.data.playersHash || {};
                 });
