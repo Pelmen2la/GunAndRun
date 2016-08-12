@@ -16,6 +16,7 @@
         <div class="action-list">
             <div class="action-info" ng-repeat="action in playerData.actionList | filter:isActionVisible">
                 <div class="shot-info" ng-show="action.type === 'shot'">
+                    <img ng-src="/resources/icons/weapons/{{action.params.weaponName}}.png">
                     {{action.params.weaponName}}
                     {{action.params.damage}}
                 </div>
@@ -64,6 +65,8 @@
         </div>
     </div>
 
+    <canvas id="HelperCanvas"></canvas>
+    <div id="FlagsContainer" class="flags-container"></div>
 
     <div ng-show="!playerData.key" ng-controller="LoginController">
         <div class="modal-backdrop fade in"></div>
@@ -126,5 +129,6 @@
 <script src="js/controllers/login.js"></script>
 <script src="js/controllers/gameinterface.js"></script>
 <script src="js/services/stringresources.js"></script>
+<script src="js/services/utils.js"></script>
 </body>
 </html>

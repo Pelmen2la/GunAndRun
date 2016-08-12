@@ -11,6 +11,10 @@ body {
     height: 50%;
 }
 
+.flags-container {
+    display: none;
+}
+
 /* Map */
 .main-map {
     width: 100%;
@@ -106,6 +110,11 @@ body {
     right: 5px;
     position: absolute;
     z-index: 1;
+}
+
+.action-list .shot-info img {
+    width: 20px;
+    height: 20px;
 }
 /* /Action List */
 

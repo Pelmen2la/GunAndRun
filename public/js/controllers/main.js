@@ -1,9 +1,10 @@
 angular.module('gunAndRunApp.controllers', []);
 
 angular.module('gunAndRunApp.controllers')
-    .controller('MainController', ['$scope', '$http', 'StringResources',
-        function($scope, $http, StringResources) {
+    .controller('MainController', ['$scope', '$http', 'StringResources', 'Utils',
+        function($scope, $http, StringResources, Utils) {
             $scope.stringResources = StringResources;
+            $scope.utils = Utils;
             $scope.allowedLanguages = ['eng', 'rus'];
             $scope.appLanguage = 'eng';
             $scope.playerData = {}
@@ -40,7 +41,7 @@ angular.module('gunAndRunApp.controllers')
                 if(!country) {
                     return ''
                 }
-                return $scope.appLanguage === 'eng' ? country.demonym : country.translations[$scope.appLanguage].common;
+                return $scope.appLanguage === 'eng' ? country.name.common : country.translations[$scope.appLanguage].common;
             };
             $scope.filterCountryList = function(filterText) {
                 return function(country) {

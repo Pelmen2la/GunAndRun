@@ -1,5 +1,5 @@
 angular.module('gunAndRunApp.controllers')
-    .controller('MapController', ['$scope', '$http', function($scope, $http) {
+    .controller('MapController', ['$scope', '$http', 'Utils', function($scope, $http, Utils) {
         $scope.targetList = [];
         $scope.raster = new ol.layer.Tile({
             source: new ol.source.OSM()
@@ -15,16 +15,13 @@ angular.module('gunAndRunApp.controllers')
             style: function(feature) {
                 var features = feature.get('features'),
                     playersCount = features.length,
-                    maxNameLength = Math.trunc(40 / playersCount),
-                    namesLabel = feature.get('features').map(function(feature) {
-                        return feature.playerData.name.substring(0, maxNameLength) + feature.playerData.hp;
-                    }).join(',');
+                    maxNameLength = Math.trunc(40 / playersCount);
                 var style = new ol.style.Style({
                     image: new ol.style.Icon({
-                        src: '/resources/icons/flags/small/' + features[0].playerData.country.demonym + '.png'
+                        src:  getPlayersFeatureIconSrc(features)
                     }),
                     text: new ol.style.Text({
-                        text: namesLabel,
+                        text: getPlayersFeatureLabel(features),
                         offsetY: 20,
                         scale: 1.5
                     })
@@ -74,6 +71,8 @@ angular.module('gunAndRunApp.controllers')
             $scope.targetList = [];
         };
 
+        var FLAG_IMAGE_ID_POSTFIX = 'FlagIcon';
+
         function addPlayerFeature(playerData) {
             var feature = new ol.Feature();
             feature.setId(playerData.name);
@@ -103,5 +102,79 @@ angular.module('gunAndRunApp.controllers')
                 }
                 $scope.playersHash = response.data.playersHash || {};
             });
+        };
+        function getPlayersFeatureLabel(features) {
+            var maxNameLength = Math.trunc(40 / features.length);
+            return features.map(function(feature) {
+                return feature.playerData.name.substring(0, maxNameLength) + feature.playerData.hp;
+            }).join(',');
+        };
+        function getPlayersFeatureIconSrc(features) {
+            var countries = {};
+            features.forEach(function(feature) {
+                var countryName = getPlayerFeatureCountryName(feature);
+                if(!getFlagIconImage(countryName)) {
+                    var flagImg = Utils.createElementFromString('<img src="' + getFlagIconUrl(countryName) +
+                        '" id="' + getCountryFlagIconId(countryName) + '"/>');
+                    document.getElementById('FlagsContainer').appendChild(flagImg);
+                }
+                countries[countryName] = countries[countryName] ? 1 : countries[countryName] + 1;
+            });
+            return getCountriesFlagImageSrc(countries);
+        };
+        function getCountriesFlagImageSrc(countries) {
+            var countriesArr = [];
+            for(key in countries) {
+                if(countries.hasOwnProperty(key)) {
+                    countriesArr.push({
+                        name: key,
+                        count: countries[key]
+                    });
+                }
+            }
+            countriesArr = countriesArr.sort(function(a, b) { return a.count - b.count }).slice(0, 8);
+            var countriesFlagImageId = getCountriesFlagIconId(countriesArr),
+                image = document.getElementById(countriesFlagImageId) || createCountriesImage(countriesArr);
+            return image.src;
+        };
+        function createCountriesImage(countriesArr) {
+            var iconPathWidth = 32,
+                iconHeight = 21,
+                canvas = document.getElementById('HelperCanvas'),
+                ctx = canvas.getContext('2d'),
+                image = new Image();
+            if(countriesArr.length > 3) {
+                iconPathWidth = iconPathWidth * 3 / countriesArr.length;
+            }
+            canvas.height = iconHeight;
+            canvas.width = iconPathWidth * countriesArr.length;
+            for(var country, i = 0; country = countriesArr[i]; i++) {
+                image.src = getFlagIconUrl(country.name);
+                ctx.drawImage(image, i * iconPathWidth, 0, (i + 1) * iconPathWidth, iconHeight);
+            };
+            var src = canvas.toDataURL('image/png'),
+                img = Utils.createElementFromString('<img src="' + src + '" id="' + getCountriesFlagIconId(countriesArr) +'"/>');
+            document.getElementById('FlagsContainer').appendChild(img);
+            return img;
+        };
+        function getCountriesFlagIconId(countriesArr) {
+            return countriesArr.map(function(country) {
+                    return removeWhitespaces(country.name);
+                }).join('') + FLAG_IMAGE_ID_POSTFIX;
+        };
+        function getCountryFlagIconId(countryName) {
+            return removeWhitespaces(countryName) + FLAG_IMAGE_ID_POSTFIX;
+        };
+        function removeWhitespaces(s) {
+            return s.replace(' ', '');
+        };
+        function getFlagIconImage(countryName) {
+            return document.getElementById(getCountryFlagIconId(countryName));
+        };
+        function getPlayerFeatureCountryName(feature) {
+            return feature.playerData.country.name.common;
+        };
+        function getFlagIconUrl(countryName) {
+            return '/resources/icons/flags/small/' + countryName + '.png'
         };
     }]);
