@@ -12,6 +12,7 @@ angular.module('gunAndRunApp.controllers')
 
         $scope.clusters = new ol.layer.Vector({
             source: $scope.clusterSource,
+            strategy: ol.loadingstrategy.bbox,
             style: function(feature) {
                 var features = feature.get('features'),
                     playersCount = features.length,
@@ -35,7 +36,8 @@ angular.module('gunAndRunApp.controllers')
             target: 'MainMap',
             view: new ol.View({
                 center: [53, 60],
-                zoom: 2
+                zoom: 4,
+                minZoom: 4
             })
         });
 
