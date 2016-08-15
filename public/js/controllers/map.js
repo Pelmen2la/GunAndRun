@@ -34,7 +34,7 @@ angular.module('gunAndRunApp.controllers')
             layers: [$scope.raster, $scope.clusters],
             target: 'MainMap',
             view: new ol.View({
-                center: [0, 0],
+                center: [53, 60],
                 zoom: 2
             })
         });
@@ -51,7 +51,6 @@ angular.module('gunAndRunApp.controllers')
                     }
                 }
             }
-            $scope.source.refresh();
         });
 
         $scope.map.on('click', function(evt) {
@@ -74,14 +73,26 @@ angular.module('gunAndRunApp.controllers')
         var FLAG_IMAGE_ID_POSTFIX = 'FlagIcon';
 
         function addPlayerFeature(playerData) {
-            var feature = new ol.Feature();
+            var feature = new ol.Feature({
+                geometry: getFeatureGeometry(playerData)
+            });
+            feature.playerData = playerData;
             feature.setId(playerData.name);
             $scope.source.addFeature(feature);
-            updateFeature(feature, playerData);
         };
         function updateFeature(feature, playerData) {
+            var newGeometry = getFeatureGeometry(playerData);
             feature.playerData = playerData;
-            feature.setGeometry(new ol.geom.Point(ol.proj.transform([playerData.lng, playerData.lat], 'EPSG:4326', 'EPSG:900913')));
+            if(getDistanceBetweenPoints(newGeometry, feature.getGeometry()) > 1000) {
+                feature.setGeometry(newGeometry);
+            }
+        };
+        function getDistanceBetweenPoints(point1, point2) {
+            var line = new ol.geom.LineString([point1.getCoordinates(), point2.getCoordinates()]);
+            return Math.round(line.getLength() * 100) / 100;
+        };
+        function getFeatureGeometry(playerData) {
+            return new ol.geom.Point(ol.proj.transform([playerData.lng, playerData.lat], 'EPSG:4326', 'EPSG:900913'))
         };
         function shot(targetPlayerData) {
             $http({
