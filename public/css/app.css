@@ -148,22 +148,10 @@ body {
     bottom: 0;
 }
 
-.weapon-icon {
+.game-interface-wrapper .weapon-bar .weapon-item .weapon-image {
     display: inline-block;
     width: 64px;
     height: 64px;
-}
-
-.weapon-icon.pistol {
-    background-image: url(../resources/icons/weapons/pistol.png);
-}
-
-.weapon-icon.machinegun {
-    background-image: url(../resources/icons/weapons/machinegun.png);
-}
-
-.weapon-icon.rifle {
-    background-image: url(../resources/icons/weapons/rifle.png);
 }
 /* /Weapon Bar */
 

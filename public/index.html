@@ -34,7 +34,7 @@
         <div class="weapon-bar">
             <span class="weapon-item" ng-repeat="weapon in playerData.weaponList" ng-click="onWeaponItemClick(weapon)">
                 <div class="weapon-ammo">{{weapon.ammo}}</div>
-                <div class="weapon-icon" ng-class="weapon.name"></div>
+                <img class="weapon-image" ng-src="/resources/icons/weapons/{{weapon.name}}.png">
                 <div class="selected-mask" ng-show="weapon.name == playerData.selectedWeapon.name"></div>
             </span>
         </div>
