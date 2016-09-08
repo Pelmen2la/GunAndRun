@@ -153,6 +153,18 @@ body {
     width: 64px;
     height: 64px;
 }
+
+.weapon-icon.pistol {
+    background-image: url(../resources/icons/weapons/pistol.png);
+}
+
+.weapon-icon.machinegun {
+    background-image: url(../resources/icons/weapons/machinegun.png);
+}
+
+.weapon-icon.rifle {
+    background-image: url(../resources/icons/weapons/rifle.png);
+}
 /* /Weapon Bar */
 
 /* Bottom Info Items */
@@ -220,6 +232,16 @@ body {
     padding-left: 18px;
 }
 /* /Bottom Info Panel */
+
+.bonus-container {
+    background-image: url(../resources/icons/interface/bonuscontainer.png);
+    width: 64px;
+    height: 64px;
+    position: fixed;
+    z-index: 3;
+    cursor: pointer;
+    display: none;
+}
 /* /Game Interface Wrapper */
 
 

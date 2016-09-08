@@ -94,7 +94,7 @@ angular.module('gunAndRunApp.controllers')
             return Math.round(line.getLength() * 100) / 100;
         };
         function getFeatureGeometry(playerData) {
-            return new ol.geom.Point(ol.proj.transform([playerData.lng, playerData.lat], 'EPSG:4326', 'EPSG:900913'))
+            return new ol.geom.Point(ol.proj.transform([playerData.lon, playerData.lat], 'EPSG:4326', 'EPSG:900913'))
         };
         function shot(targetPlayerData) {
             $http({

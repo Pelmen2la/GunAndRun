@@ -27,6 +27,9 @@ angular.module('gunAndRunApp.controllers')
                         var selectedWeapon = $scope.playerData.selectedWeapon || playerData.weaponList[0];
                         $scope.playerData = response.data.playerData;
                         $scope.playerData.selectedWeapon = selectedWeapon;
+                        if($scope.playerData.bonusContainerVisible) {
+                            $scope.$broadcast('showBonusContainer');
+                        }
                     } else if($scope.playerData && $scope.playerData.key) {
                         $scope.playerData = {};
                         $cookies.putObject('playerData', {});
@@ -67,5 +70,5 @@ angular.module('gunAndRunApp.controllers')
                         loadCountryList();
                     }
                 });
-            }
+            };
         }]);

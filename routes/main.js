@@ -16,6 +16,11 @@ module.exports = function(app) {
         res.json(gameModule.shot(data.playerName, data.key, data.targetPlayerName, data.selectedWeaponName));
     });
 
+    app.post('/game/catchBonusContainer', function(req, res, next) {
+        var data = req.body;
+        res.json(gameModule.catchBonusContainer(data.playerName, data.key));
+    });
+
     app.get('/game/info', function(req, res, next) {
         res.json(gameModule.tryGetGameInfo(req.query.playerName, req.query.key));
     });
